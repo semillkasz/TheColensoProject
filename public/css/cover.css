@@ -211,3 +211,16 @@ nav{
   border-radius: 20px;
   transform: scale(1.2);
 }
+
+.navbar-default{
+  background-color: transparent;
+  border-color: transparent;
+  position: center;
+}
+
+.navbar-toggle{
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+  background-color: transparent;
+  border-color: transparent;
+}

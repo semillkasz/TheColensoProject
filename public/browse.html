@@ -25,6 +25,7 @@
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.js"></script>
     <script src="js/colenso.js"></script>
+    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -54,12 +55,19 @@
               </nav>
             </div>
           </div>
-
           
-          <nav>
+          <nav class="navbar navbar-default">
             <div class="container-fluid">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#browsenavbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            </div>
+            <div class="collapse navbar-collapse" id="browsenavbar">
               <ul class="nav nav-justified">
-                <li><a href="#private-letter-browse" id="privateletters"> <img src="images/privateletters.png" alt="Private Letters" width="50" height="30"><br/><h6>Private Letters</h6></a></li>
+                <li><span class="sr-only">(current)</span><a href="#private-letter-browse" id="privateletters"> <img src="images/privateletters.png" alt="Private Letters" width="50" height="30"><br/><h6>Private Letters</h6></a></li>
                 <li><a href="#diary-browse" id="diaries"><img src="images/diaries.png" alt="Diaries" width="50" height="30"><h6>Diaries</h6></a></li>
                 <li><a href="#publication-browse" id="publications"><img src="images/publication.png" alt="Publications" width="50" height="30"><h6>Publications</h6></a></li>
                 <li><a href="#judgement-browse" id="judgements"><img src="images/judgement.png" alt="Judgement" width="50" height="30"><h6>Judgements</h6></a></li>
@@ -70,6 +78,7 @@
 
           <div class="container-fluid" id="private-letter-browse">
             <h3 align="right"> Private Letters </h3>
+
           </div>
 
           <div class="container-fluid" id="diary-browse">
