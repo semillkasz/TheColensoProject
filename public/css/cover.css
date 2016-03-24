@@ -158,14 +158,14 @@ body {
   .masthead,
   .mastfoot,
   .cover-container {
-    width: 700px;
+    width: 650px;
   }
 }
 
 /* Carousel base class */
 .carousel {
-  height: 380px;
-  margin-bottom: 30px;
+  height: 350px;
+  margin-bottom: 20px;
   border-radius: 25px;
 }
 /* Since positioning the image, we need to help out the caption */
@@ -175,7 +175,7 @@ body {
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 380px;
+  height: 350px;
   background-color: #786D5F;
   opacity: 0.8;
 }
@@ -223,4 +223,8 @@ nav{
   filter: invert(100%);
   background-color: transparent;
   border-color: transparent;
+}
+
+.container-fluid>h3{
+  text-align: center;
 }
