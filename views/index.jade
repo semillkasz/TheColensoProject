@@ -4,21 +4,21 @@ html(lang='en')
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    // The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+    
     meta(name='description', content='')
     meta(name='author', content='')
     link(rel='icon', href='../../favicon.ico')
-    title The Colenso Project
+    title #{title}
     // Bootstrap core CSS
     link(href='css/bootstrap.min.css', rel='stylesheet')
     // IE10 viewport hack for Surface/desktop Windows 8 bug
-    link(href='css/ie10-viewport-bug-workaround.css', rel='stylesheet')
+    //link(href='css/ie10-viewport-bug-workaround.css', rel='stylesheet')
     // Custom styles for this template
     link(href='css/cover.css', rel='stylesheet')
     // Just for debugging purposes. Don't actually copy these 2 lines!
     //if lt IE 9
       script(src='../../assets/js/ie8-responsive-file-warning.js')
-    script(src='js/ie-emulation-modes-warning.js')
+    //script(src='js/ie-emulation-modes-warning.js')
     script(src='js/colenso.js')
     // HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
     //if lt IE 9
@@ -30,13 +30,12 @@ html(lang='en')
         .cover-container
           .masthead.clearfix
             .inner
-              h3.masthead-brand= title
+              h3.masthead-brand #{title}
               nav
                 ul.nav.masthead-nav
                   li.active
                     a(href='#', onclick='goHome();') Home
-                  li
-                    a(href='#', onclick='browse();') Browse
+                  
                   li
                     a(href='#', onclick='addLetter();') Add
                   li
@@ -48,25 +47,25 @@ html(lang='en')
                   span.sr-only Toggle navigation
                   span.icon-bar
                   span.icon-bar
-                  span.icon-bar
               #browsenavbar.collapse.navbar-collapse
                 ul.nav.nav-justified
                   li
                     span.sr-only (current)
-                    a#privateletters(href='#private-letter-browse')
+                    a#privateletters(href='private_letters')
                       img(src='images/privateletters.png', alt='Private Letters', width='50', height='30')
                       br
                       h6 Private Letters
                   li
-                    a#diaries(href='#diary-browse')
+                    a#diaries(href='diaries')
                       img(src='images/diaries.png', alt='Diaries', width='50', height='30')
                       h6 Diaries
                   li
-                    a#publications(href='#publication-browse')
+                    a#publications(href='publications')
                       img(src='images/publication.png', alt='Publications', width='50', height='30')
-                      h6 Publications
+                      h6 Publication
+                  
                   li
-                    a#newpaperletters(href='#newspaper-letter-browse')
+                    a#newpaperletters(href='newspaper_letters')
                       img(src='images/newspaper.png', alt='Newspaper Letters', width='50', height='30')
                       h6 Newspaper Letters
           #myCarousel.carousel.slide(data-ride='carousel')
@@ -81,36 +80,40 @@ html(lang='en')
                 .container
                   .carousel-caption
                     h1 Private Letters
+                    p 
+                      | This exciting new initiative seeks to build on the blossoming national and international interest in William Colenso’s life and ideas as the result of the William Colenso Bicentenary Celebrations held in Hawke’s Bay in 2011, and a body of new publications and research.
                     p
-                      | Note: If you're viewing this page via a 
-                      code file://
-                      |  URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.
-                    p
-                      a.btn.btn-lg.btn-primary(href='#', role='button') Read more
-              .item
-                .container
-                  .carousel-caption
-                    h1 Publications
-                    p
-                      | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                    p
-                      a.btn.btn-lg.btn-primary(href='#', role='button') Read more
+                      a.btn.btn-lg.btn-primary(href='private_letters', role='button')  View the Private Letters
+
               .item
                 .container
                   .carousel-caption
                     h1 Diaries
                     p
-                      | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                      | The intent of the Project is to ignite public and academic interest in Colenso’s words – published, unpublished, private letters, journals - both in Maori and English, by sharing them with the world in digital form. 
+
                     p
-                      a.btn.btn-lg.btn-primary(href='#', role='button') Read more
+                      a.btn.btn-lg.btn-primary(href='diaries', role='button') Explore Diaries
+              .item
+                .container
+                  .carousel-caption
+                    h1 Publications
+                    p
+                      | We envisage a hub for all things Colenso: a place to read documents in the original, explore his writing through transcriptions, and as a place to experiment with new research and interpretation methods.
+
+                    p
+                      a.btn.btn-lg.btn-primary(href='publications', role='button') See Publications
+                           
               .item
                 .container
                   .carousel-caption
                     h1 Newspaper Letters
                     p
-                      | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                      | Bringing our collective knowledge to bear on Colenso material, wherever it lies, will determine the strength of this bibliography, and to this end contributions and information are welcomed from individuals and institutions.
+
                     p
-                      a.btn.btn-lg.btn-primary(href='#', role='button') Read more
+                      a.btn.btn-lg.btn-primary(href='newspaper_letters', role='button') Browse Newspaper Letters
+
             a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
               span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
               span.sr-only Previous
@@ -121,7 +124,7 @@ html(lang='en')
           .mastfoot
             .inner
               p
-                a(href='http://www.williamcolenso.co.nz/')= title 
+                a(href='http://www.williamcolenso.co.nz/') #{title}
                 |  by 
                 a(href='https://twitter.com/kszndra')  semillkasz
                 | .
@@ -134,4 +137,4 @@ html(lang='en')
       window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\\/script>')
     script(src='js/bootstrap.min.js')
     // IE10 viewport hack for Surface/desktop Windows 8 bug
-    script(src='js/ie10-viewport-bug-workaround.js')
+    //script(src='js/ie10-viewport-bug-workaround.js')

@@ -8,17 +8,17 @@ html(lang='en')
     meta(name='description', content='')
     meta(name='author', content='')
     link(rel='icon', href='../../favicon.ico')
-    title The Colenso Project
+    title= title
     // Bootstrap core CSS
     link(href='css/bootstrap.min.css', rel='stylesheet')
     // IE10 viewport hack for Surface/desktop Windows 8 bug
-    link(href='css/ie10-viewport-bug-workaround.css', rel='stylesheet')
+    //link(href='css/ie10-viewport-bug-workaround.css', rel='stylesheet')
     // Custom styles for this template
     link(href='css/cover.css', rel='stylesheet')
     // Just for debugging purposes. Don't actually copy these 2 lines!
     //if lt IE 9
-      script(src='../../assets/js/ie8-responsive-file-warning.js')
-    script(src='js/ie-emulation-modes-warning.js')
+    //  script(src='../../assets/js/ie8-responsive-file-warning.js')
+    //script(src='js/ie-emulation-modes-warning.js')
     script(src='js/colenso.js')
     script(src='http://code.jquery.com/jquery-latest.js')
     // HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
@@ -29,15 +29,14 @@ html(lang='en')
     .site-wrapper
       .site-wrapper-inner
         .cover-container
-          .masthead.clearfix
+          .masthead.clearfix(style='position: relative;')
             .inner
               h3.masthead-brand= title
               nav
                 ul.nav.masthead-nav
                   li
                     a(href='#', onclick='goHome();') Home
-                  li
-                    a(href='#', onclick='browse();') Browse
+                  
                   li
                     a(href='#', onclick='addLetter();') Add
                   li.active
@@ -47,9 +46,11 @@ html(lang='en')
               h4.col-sm-1.control-label
                 span.glyphicon.glyphicon-search
               .col-sm-11
-                input#searchItem.form-control(type='text', placeholder='Colenso Letter', autocomplete='off')
+                form(action="/search", method="get")
+                  input.form-control(type='text', name="searchString", method="get", autocomplete="off")
           p#output
-          .mastfoot
+          | !{output}
+          .mastfoot(style='position: relative;')
             .inner
               p
                 a(href='http://www.williamcolenso.co.nz/')= title 
@@ -65,4 +66,4 @@ html(lang='en')
       window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\\/script>')
     script(src='js/bootstrap.min.js')
     // IE10 viewport hack for Surface/desktop Windows 8 bug
-    script(src='js/ie10-viewport-bug-workaround.js')
+    //script(src='js/ie10-viewport-bug-workaround.js')

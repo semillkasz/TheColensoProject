@@ -8,7 +8,7 @@ html(lang='en')
     meta(name='description', content='')
     meta(name='author', content='')
     link(rel='icon', href='../../favicon.ico')
-    title The Colenso Project
+    title= title
     // Bootstrap core CSS
     link(href='css/bootstrap.min.css', rel='stylesheet')
     // IE10 viewport hack for Surface/desktop Windows 8 bug
@@ -35,8 +35,7 @@ html(lang='en')
                 ul.nav.masthead-nav
                   li
                     a(href='#', onclick='goHome();') Home
-                  li
-                    a(href='#', onclick='browse();') Browse
+                  
                   li.active
                     a(href='#', onclick='addLetter();') Add
                   li
@@ -59,7 +58,6 @@ html(lang='en')
                       option(value='privateletter') Private Letter
                       option(value='diary') Diary
                       option(value='publication') Publication
-                      option(value='judgement') Judgement
                       option(value='newspaperletter') Newspaper Letter
                 .form-group
                   label(for='inputTitle') Title

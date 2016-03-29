@@ -1,7 +1,7 @@
 
 
 function goHome(){
-	window.open("index","_self");
+	window.open("/","_self");
 }
 function browse(){
 	window.open("browse","_self");

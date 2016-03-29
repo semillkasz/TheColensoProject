@@ -8,17 +8,17 @@ html(lang='en')
     meta(name='description', content='')
     meta(name='author', content='')
     link(rel='icon', href='../../favicon.ico')
-    title The Colenso Project
+    title #{title}
     // Bootstrap core CSS
     link(href='css/bootstrap.min.css', rel='stylesheet')
     // IE10 viewport hack for Surface/desktop Windows 8 bug
-    link(href='css/ie10-viewport-bug-workaround.css', rel='stylesheet')
+    //link(href='css/ie10-viewport-bug-workaround.css', rel='stylesheet')
     // Custom styles for this template
     link(href='css/cover.css', rel='stylesheet')
     // Just for debugging purposes. Don't actually copy these 2 lines!
     //if lt IE 9
       script(src='../../assets/js/ie8-responsive-file-warning.js')
-    script(src='js/ie-emulation-modes-warning.js')
+    //script(src='js/ie-emulation-modes-warning.js')
     script(src='js/colenso.js')
     // HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
     //if lt IE 9
@@ -28,9 +28,9 @@ html(lang='en')
     .site-wrapper
       .site-wrapper-inner
         .cover-container
-          .masthead.clearfix
+          .masthead.clearfix(style='position: relative;')
             .inner
-              h3.masthead-brand= title
+              h3.masthead-brand #{title}
               nav
                 ul.nav.masthead-nav
                   li
@@ -52,34 +52,33 @@ html(lang='en')
               ul.nav.nav-justified
                 li
                   span.sr-only (current)
-                  a#privateletters(href='#private-letter-browse')
+                  a#privateletters(href='private_letters')
                     img(src='images/privateletters.png', alt='Private Letters', width='50', height='30')
                     br
                     h6 Private Letters
                 li
-                  a#diaries(href='#diary-browse')
+                  a#diaries(href='diaries')
                     img(src='images/diaries.png', alt='Diaries', width='50', height='30')
                     h6 Diaries
                 li
-                  a#publications(href='#publication-browse')
+                  a#publications(href='publications')
                     img(src='images/publication.png', alt='Publications', width='50', height='30')
-                    h6 Publications
+                    h6 Publication
                 li
-                  a#newpaperletters(href='#newspaper-letter-browse')
+                  a#newpaperletters(href='newspaper_letters')
                     img(src='images/newspaper.png', alt='Newspaper Letters', width='50', height='30')
                     h6 Newspaper Letters
           #private-letter-browse.container-fluid
             h3  Private Letters 
+            p #{list_letters}
           #diary-browse.container-fluid
             h3  Diaries 
-          #publication-browse.container-fluid
-            h3  Publications 
           #newspaper-letter-browse.container-fluid
             h3  Newspaper Letters 
-          .mastfoot
+          .mastfoot(style='position: relative;')
             .inner
               p
-                a(href='http://www.williamcolenso.co.nz/')= title 
+                a(href='http://www.williamcolenso.co.nz/') #{title}
                 |  by 
                 a(href='https://twitter.com/kszndra')  semillkasz
                 | .
@@ -92,4 +91,4 @@ html(lang='en')
       window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\\/script>')
     script(src='js/bootstrap.min.js')
     // IE10 viewport hack for Surface/desktop Windows 8 bug
-    script(src='js/ie10-viewport-bug-workaround.js')
+    //script(src='js/ie10-viewport-bug-workaround.js')
