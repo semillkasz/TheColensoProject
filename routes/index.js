@@ -6,6 +6,11 @@ var client = new basex.Session("127.0.0.1", 1984, "admin", "admin");
 
 client.execute("OPEN Colenso");
 
+var multer = require('multer');
+var storage = multer.memoryStorage();
+var upload = multer({storage: storage});
+router.use(upload.single('file'));
+
 module.exports = router;
 
 
@@ -24,9 +29,15 @@ router.get("/",function(req,res){
 	
 });
 
-
 /** - - - - SEARCH PAGE - - - - - */
 router.get('/search', function(req, res) {
+	//var raw_input = req.query.searchString
+
+	// var input = decodeURI(raw_input)
+	// 	.replace(" AND ", '\' ftand \'')
+	// 	.replace(" NOT ", '\' ftnot \'')
+	// 	.replace(" OR ", '\' ftor \'');
+
 	var query = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';" +
     " for $t in (collection('Colenso'))" +
     " where $t[string() contains text { '"+req.query.searchString+"' } any]" +
@@ -48,34 +59,12 @@ router.get('/search', function(req, res) {
 		console.log("RESULT");
 	}
 });
-// if(req.query.searchString){
-//     client.execute("XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';" +
-//     " for $t in (collection('Colenso'))" +
-//     " where $t[string() contains text { '"+req.query.searchString+"' } any]" +
-//     " let $p := db:path($t)" +
-//     " group by $p" +
-//     " return <p><a href='/view?doc={$p}'>{$t//title/text()}</a></p>",
-//       function (error, result) {
-//         if(error){ console.error(error);}
-//         else {
-//           res.render('search', { title: 'The Colenso Project', output: result.result, searchString: req.query.searchString});
-//         }
-//       }
-//     );
-//   } else {
-//     res.render('search', { title: 'The Colenso Project', content: "", searchString: "" });
-//   }
-// });
+
 /** - - - - ADD PAGE - - - - - */
 router.get('/add', function(req, res) {
 	res.render('add', { title: 'The Colenso Project', content: req.query.searchString });
 });
 
-/** - - - - BROWSE PAGE - - - - - */
-router.get('/browse', function(req, res) {
-	res.render('browse', { title: 'The Colenso Project'});
-		console.log("RESULT");
-});
 
 /** - - - - Private Letters Page - - - - */
 router.get('/private_letters', function(req, res) {
@@ -84,7 +73,7 @@ router.get('/private_letters', function(req, res) {
     " where $t[string() contains text { 'private letter' } any]" +
     " let $p := db:path($t)" +
     " group by $p" +
-    " return <p><a href='/view?doc={$p}'>{$p}</a></p>";
+    " return <p><a href='/view?doc={$p}'>{$t//title/text()}</a></p>";
 	client.execute(query, 
 	function (error, result) {
 		if(error){ 
@@ -104,7 +93,7 @@ router.get('/diaries', function(req, res) {
     " where $t[string() contains text { 'diary' } any]" +
     " let $p := db:path($t)" +
     " group by $p" +
-    " return <p><a href='/view?doc={$p}'>{$p}</a></p>";
+    " return <p><a href='/view?doc={$p}'>{$t//title/text()}</a></p>";
 	client.execute(query, 
 	function (error, result) {
 		if(error){ 
@@ -124,7 +113,7 @@ router.get('/publications', function(req, res) {
     " where $t[string() contains text { 'publication' } any]" +
     " let $p := db:path($t)" +
     " group by $p" +
-    " return <p><a href='/view?doc={$p}'>{$p}</a></p>";
+    " return <p><a href='/view?doc={$p}'>{$t//title/text()}</a></p>";
 	client.execute(query, 
 	function (error, result) {
 		if(error){ 
@@ -144,7 +133,7 @@ router.get('/newspaper_letters', function(req, res) {
     " where $t[string() contains text { 'newspaper' } any]" +
     " let $p := db:path($t)" +
     " group by $p" +
-    " return <p><a href='/view?doc={$p}'>{$p}</a></p>";
+    " return <p><a href='/view?doc={$p}'>{$t//title/text()}</a></p>";
 	client.execute(query, 
 	function (error, result) {
 		if(error){ 
@@ -172,17 +161,50 @@ router.get('/view', function(req, res) {
     res.render('view', { content: req.query.doc });
   }
 });
-// 	var query = ("XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0'; " +
-// 	 "doc('Colenso/McLean/private_letters/PrLMcL-0024.xml')");
-// 	client.execute(query, 
-// 	function (error, result) {
-// 		if(error){ 
-// 			console.error(error);
-// 		}
-// 		else {
-// 			res.render('view', { title: 'The Colenso Project', content: result.result });
-// 		}
-// 	});
-	
-// });
 
+
+/** - - - - DOWNLOAD - - - - */
+router.get('/download', function(req, res) {
+  	var url = req.originalUrl;
+	var path = url.replace('/download/', '');
+	client.execute("XQUERY doc('"+path+"')",
+		function(error, result) {
+			if (error) {
+				console.error(error);
+			}
+			else {
+				var doc = result.result;
+				var filename = 'tei_document.xml';
+				res.writeHead(200, {
+					'Content-Disposition': 'attachment; filename=' + filename,
+				});
+				res.write(doc);
+				res.end();
+			}
+		}
+	)
+});
+
+/** - - - - UPLOAD - - - - */
+router.post('/upload', function(req, res){
+	if(req.file){
+		var xml = req.file.buffer.toString();
+		client.execute('ADD TO "Colenso/' + req.file.originalname + '" "' + xml + '"',
+			function(error, result){
+				if(error){
+					console.error(error);
+				} else {
+					res.render('add', { title: 'The Colenso Project', uploaded: true});
+					console.log("File uploaded")
+					window.alert("File uploaded.");
+				}
+		});
+	} else {
+		res.render('add', { title: 'The Colenso Project', uploaded: false});
+	}
+});
+
+/** - - - - EDIT - - - - */
+router.post('/edit', function(req, res){
+	
+});

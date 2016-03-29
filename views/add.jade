@@ -17,7 +17,7 @@ html(lang='en')
     link(href='css/cover.css', rel='stylesheet')
     // Just for debugging purposes. Don't actually copy these 2 lines!
     //if lt IE 9
-      script(src='../../assets/js/ie8-responsive-file-warning.js')
+    //  script(src='../../assets/js/ie8-responsive-file-warning.js')
     script(src='js/ie-emulation-modes-warning.js')
     script(src='js/colenso.js')
     // HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
@@ -40,32 +40,13 @@ html(lang='en')
                     a(href='#', onclick='addLetter();') Add
                   li
                     a(href='#', onclick='searchLetter();') Search
-          .container-fluid
-            #add
-              form.form-horizontal
-                .form-group
-                  label.col-sm-2.control-label(for='inputName') Name
-                  .col-sm-8
-                    input#inputName.form-control(type='text', placeholder='Kasz Semilla')
-                .form-group
-                  label.col-sm-2.control-label(for='inputEmail') Email
-                  .col-sm-8
-                    input#inputEmail.form-control(type='email', placeholder='kas.sem@example.com')
-                .form-group
-                  label.col-sm-2.control-label(for='category') Category
-                  .col-sm-4
-                    select.form-control
-                      option(value='privateletter') Private Letter
-                      option(value='diary') Diary
-                      option(value='publication') Publication
-                      option(value='newspaperletter') Newspaper Letter
-                .form-group
-                  label(for='inputTitle') Title
-                  input.form-control(type='text', placeholder='Title')
-                  label(for='inputBody') Letter
-                  textarea.form-control(rows='7')
-                  button.btn.btn-default(type='submit') Submit
-                  button.btn.btn-default(type='cancel') Cancel
+          .container-fluid(align='center')
+            form(enctype='multipart/form-data', method='post', action='/upload')
+              fieldset
+                legend Upload Document:
+                input(type='file', name='file', size='50')
+                br
+                button.btn.btn-default(type='submit') Upload
           .mastfoot
             .inner
               p
@@ -82,4 +63,4 @@ html(lang='en')
       window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\\/script>')
     script(src='js/bootstrap.min.js')
     // IE10 viewport hack for Surface/desktop Windows 8 bug
-    script(src='js/ie10-viewport-bug-workaround.js')
+    //script(src='js/ie10-viewport-bug-workaround.js')
