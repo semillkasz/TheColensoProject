@@ -47,6 +47,9 @@ html(lang='en')
                 input(type='file', name='file', size='50')
                 br
                 button.btn.btn-default(type='submit') Upload
+                if(uploaded)
+                  p
+                  | File has been uploaded
           .mastfoot
             .inner
               p

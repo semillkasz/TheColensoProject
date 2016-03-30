@@ -31,21 +31,32 @@ router.get("/",function(req,res){
 
 /** - - - - SEARCH PAGE - - - - - */
 router.get('/search', function(req, res) {
-	//var raw_input = req.query.searchString
-
-	// var input = decodeURI(raw_input)
-	// 	.replace(" AND ", '\' ftand \'')
-	// 	.replace(" NOT ", '\' ftnot \'')
-	// 	.replace(" OR ", '\' ftor \'');
-
-	var query = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';" +
+	var textQuery = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';" +
     " for $t in (collection('Colenso'))" +
     " where $t[string() contains text { '"+req.query.searchString+"' } any]" +
     " let $p := db:path($t)" +
     " group by $p" +
     " return <p><a href='/view?doc={$p}'>{$t//title/text()}</a></p>";
+
+    var markupQuery = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';  " + 
+    "for $t in "+ req.query.searchMarkup +
+    " let $p := db:path($t)" +
+    " group by $p" +
+    " return <p><a href='/view?doc={$p}'>{$p}</a></p>";
+
+    var logicString = "'" + req.query.searchLogic + "'";
+    logicString = logicString.replace(" AND ", '\' ftand \'')
+    					.replace(" OR ", '\' ftor \'')
+    					.replace(" NOT ", '\' ftnot \'');
+    var logicQuery = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';" +
+    " for $t in //TEI[. contains text "+ logicString + " using wildcards]" +
+    " let $p := db:path($t)" +
+    " group by $p" +
+    " return <p><a href='/view?doc={$p}'>{$t//title/text()}</a></p>";
+
+
     if(req.query.searchString){
-		client.execute(query, 
+		client.execute(textQuery, 
 			function (error, result) {
 				if(error){ console.error(error); }
 				else {
@@ -54,7 +65,27 @@ router.get('/search', function(req, res) {
 					console.log("RESULT");
 				}
 		});
-	} else {
+	} else if(req.query.searchMarkup){
+		client.execute(markupQuery, 
+			function (error, result) {
+				if(error){ console.error(error); }
+				else {
+					res.render('search', { title: 'The Colenso Project', output: result.result, 
+						searchMarkup: req.query.searchMarkup});
+					console.log("RESULT");
+				}
+		});
+	} else if(req.query.searchLogic){
+		client.execute(logicQuery, 
+			function (error, result) {
+				if(error){ console.error(error); }
+				else {
+					res.render('search', { title: 'The Colenso Project', output: result.result, 
+						searchLogic: req.query.searchLogic});
+					console.log("RESULT");
+				}
+		});
+	}else {
 		res.render('search', { title: 'The Colenso Project', content: "", searchString: "" });
 		console.log("RESULT");
 	}
@@ -126,6 +157,26 @@ router.get('/publications', function(req, res) {
 	});
 });
 
+/** - - - - Judgement Letters Page - - - - */
+router.get('/judgements', function(req, res) {
+	var query = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';" +
+    " for $t in (collection('Colenso'))" +
+    " where $t[string() contains text { 'judgements' } any]" +
+    " let $p := db:path($t)" +
+    " group by $p" +
+    " return <p><a href='/view?doc={$p}'>{$t//title/text()}</a></p>";
+	client.execute(query, 
+	function (error, result) {
+		if(error){ 
+			console.error(error);
+		}
+		else {
+			res.render('judgements', { title: 'The Colenso Project', judgement_letters: result.result });
+			console.log("RESULT");
+		}
+	});
+});
+
 /** - - - - Newspaper Letters Page - - - - */
 router.get('/newspaper_letters', function(req, res) {
 	var query = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0';" +
@@ -162,29 +213,6 @@ router.get('/view', function(req, res) {
   }
 });
 
-
-/** - - - - DOWNLOAD - - - - */
-router.get('/download', function(req, res) {
-  	var url = req.originalUrl;
-	var path = url.replace('/download/', '');
-	client.execute("XQUERY doc('"+path+"')",
-		function(error, result) {
-			if (error) {
-				console.error(error);
-			}
-			else {
-				var doc = result.result;
-				var filename = 'tei_document.xml';
-				res.writeHead(200, {
-					'Content-Disposition': 'attachment; filename=' + filename,
-				});
-				res.write(doc);
-				res.end();
-			}
-		}
-	)
-});
-
 /** - - - - UPLOAD - - - - */
 router.post('/upload', function(req, res){
 	if(req.file){
@@ -195,8 +223,7 @@ router.post('/upload', function(req, res){
 					console.error(error);
 				} else {
 					res.render('add', { title: 'The Colenso Project', uploaded: true});
-					console.log("File uploaded")
-					window.alert("File uploaded.");
+					console.log("File uploaded");
 				}
 		});
 	} else {
@@ -207,4 +234,9 @@ router.post('/upload', function(req, res){
 /** - - - - EDIT - - - - */
 router.post('/edit', function(req, res){
 	
+});
+
+/** - - - - DOWNLOAD - - - - */
+router.get('/download', function(req, res) {
+
 });

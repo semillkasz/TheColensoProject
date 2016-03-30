@@ -36,18 +36,32 @@ html(lang='en')
                 ul.nav.masthead-nav
                   li
                     a(href='#', onclick='goHome();') Home
-                  
                   li
                     a(href='#', onclick='addLetter();') Add
                   li.active
                     a(href='#', onclick='searchLetter();') Search
           .container-fluid
             .form-group
+              legend Search Text
               h4.col-sm-1.control-label
                 span.glyphicon.glyphicon-search
               .col-sm-11
                 form(action="/search", method="get")
-                  input.form-control(type='text', name="searchString", method="get", autocomplete="off")
+                  input.form-control(type='text', name="searchString", method="get", autocomplete="off", placeholder="e.g. Colenso Project")
+              .form-group
+                legend Search Markup
+                h4.col-sm-1.control-label
+                  span.glyphicon.glyphicon-search
+                .col-sm-11
+                  form(action="/search", method="get")
+                    input.form-control(type='text', name="searchMarkup", method="get", autocomplete="off", placeholder="e.g. //name")
+              .form-group
+                legend Search using Logical Operators
+                h4.col-sm-1.control-label
+                  span.glyphicon.glyphicon-search
+                .col-sm-11
+                  form(action="/search", method="get")
+                    input.form-control(type='text', name="searchLogic", method="get", autocomplete="off", placeholder="e.g. black AND white")
           p#output
           | !{output}
           .mastfoot(style='position: relative;')
