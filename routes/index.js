@@ -204,7 +204,7 @@ router.get('/view', function(req, res) {
       function (error, result) {
         if(error){ console.error(error);}
         else {
-          res.render('view', { content: result.result, title: 'The Colenso Project' });
+          res.render('view', { content: result.result, title: 'The Colenso Project', fileName: req.query.doc });
         }
       }
     );
@@ -237,6 +237,20 @@ router.post('/edit', function(req, res){
 });
 
 /** - - - - DOWNLOAD - - - - */
-router.get('/download', function(req, res) {
-
+router.get('/download', function(req, res, next) {
+	if(req.query.doc){
+		var file = req.query.doc;
+		client.execute("XQUERY doc('Colenso/" + file +"')", 
+		function(error, result){
+			if(error){
+				console.error(error);
+			}else{				
+				res.writeHead(200, {'Content-Disposition': 'attachment; fileName=' + file});
+				res.write(result.result);
+				res.end('ok');
+			}
+		});	
+	} else{
+		console.log('Download failed');
+	}	
 });

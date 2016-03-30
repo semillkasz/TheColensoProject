@@ -41,13 +41,15 @@ html(lang='en')
                   li.active
                     a(href='#', onclick='searchLetter();') Search
           .container-fluid
-            .form-group
-              legend Search Text
-              h4.col-sm-1.control-label
-                span.glyphicon.glyphicon-search
-              .col-sm-11
-                form(action="/search", method="get")
-                  input.form-control(type='text', name="searchString", method="get", autocomplete="off", placeholder="e.g. Colenso Project")
+            div(id='textSearch')
+              .form-group
+                legend Search Text
+                h4.col-sm-1.control-label
+                  span.glyphicon.glyphicon-search
+                .col-sm-11
+                  form(action="/search", method="get")
+                    input.form-control(type='text', name="searchString", method="get", autocomplete="off", placeholder="e.g. Colenso Project")
+            div(id='markupSearch')
               .form-group
                 legend Search Markup
                 h4.col-sm-1.control-label
@@ -55,6 +57,7 @@ html(lang='en')
                 .col-sm-11
                   form(action="/search", method="get")
                     input.form-control(type='text', name="searchMarkup", method="get", autocomplete="off", placeholder="e.g. //name")
+            div(id='logicalSearch')
               .form-group
                 legend Search using Logical Operators
                 h4.col-sm-1.control-label
